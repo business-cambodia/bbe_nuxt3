@@ -1,0 +1,13 @@
+* {
+  font-family: "Hanuman", "Titillium Web";
+}
+
+::selection {
+  background: #ed1c24;
+  color: white;
+}
+
+/* remove blue backgound on mobile press */
+a {
+  -webkit-tap-highlight-color: transparent;
+}
