@@ -66,13 +66,13 @@
               <div class="bottom-wrapper">
                 <div class="flex justify-between">
                   <div class="input">
-                    <label>ភេទ-Gender</label>
+                    <label>ភេទ-gender</label>
                     <div class="flex space-x-4">
                       <label class="inline-flex items-center">
                         <input
                           type="radio"
                           class="form-radio"
-                          v-model="form.Gender"
+                          v-model="form.gender"
                           value="man"
                         />
                         <span class="ml-2">ប្រុស</span>
@@ -81,10 +81,19 @@
                         <input
                           type="radio"
                           class="form-radio"
-                          v-model="form.Gender"
+                          v-model="form.gender"
                           value="woman"
                         />
                         <span class="ml-2">ស្រី</span>
+                      </label>
+                      <label class="inline-flex items-center">
+                        <input
+                          type="radio"
+                          class="form-radio"
+                          v-model="form.gender"
+                          value="other"
+                        />
+                        <span class="ml-2">ផ្សេងៗ</span>
                       </label>
                     </div>
                   </div>
@@ -158,7 +167,7 @@ const form = ref({
   name: "",
   phone: "",
   address: "ភ្នំពេញ-Phnom Penh",
-  Gender: "",
+  gender: "",
   role: null,
 });
 
@@ -173,14 +182,14 @@ const submitForm = async () => {
     !form.value.phone ||
     !form.value.role ||
     !form.value.address ||
-    !form.value.Gender
+    !form.value.gender
   ) {
     let missingField = "";
     if (!form.value.name) missingField = "ឈ្មោះ-Name";
     else if (!form.value.phone) missingField = "លេខទូរស័ព្ទ Phone number";
     else if (!form.value.role) missingField = "តួនាទី-Role";
     else if (!form.value.address) missingField = "អាស័យដ្ឋាន-Address";
-    else if (!form.value.Gender) missingField = "ភេទ-Gender";
+    else if (!form.value.gender) missingField = "ភេទ-gender";
 
     $swal.fire({
       title: "ការដាក់ស្នើបរាជ័យ",
@@ -212,28 +221,36 @@ const submitForm = async () => {
     });
 
     if (result.isConfirmed) {
-      const response = await useApi("/items/Users_Submit", {
-        method: "POST",
-        data: form.value, // Use 'data' instead of 'body' for axios
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      $swal
-        .fire({
-          title: "បានដាក់ស្នើជោគជ័យ",
-          html: `ទម្រង់បែបបទរបស់អ្នកត្រូវបានដាក់ជូនជាមួយនឹងព័ត៌មានលម្អិតដូចខាងក្រោម:<br><br>
+      try {
+        const response = await useApi("/items/users", {
+          method: "POST",
+          data: form.value, // Use 'data' instead of 'body' for axios
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        $swal
+          .fire({
+            title: "បានដាក់ស្នើជោគជ័យ",
+            html: `ទម្រង់បែបបទរបស់អ្នកត្រូវបានដាក់ជូនជាមួយនឹងព័ត៌មានលម្អិតដូចខាងក្រោម:<br><br>
                <strong>ឈ្មោះ-Name:</strong> ${form.value.name}<br>
                <strong>លេខទូរសព្ទ-Phone:</strong> ${form.value.phone}<br>
                <strong>អាស័យដ្ឋាន-Address:</strong> ${form.value.address}<br>
-               <strong>ភេទ-Gender:</strong> ${form.value.Gender}<br>
+               <strong>ភេទ-gender:</strong> ${form.value.gender}<br>
                <strong>តួនាទី-Role:</strong> ${form.value.role}`,
-          icon: "success",
-        })
-        .then(() => {
-          location.reload(); // Refresh the page after the user clicks "OK"
+            icon: "success",
+          })
+          .then(() => {
+            location.reload(); // Refresh the page after the user clicks "OK"
+          });
+      } catch (error: any) {
+        console.error("Failed to submit form:", error);
+        $swal.fire({
+          title: "ការដាក់ស្នើបរាជ័យ",
+          text: "មានបញ្ហាកើតឡើងនៅពេលដាក់ស្នើទម្រង់នេះ"+error.message,
+          icon: "error",
         });
+      }
 
       toggle(); // Trigger animation on submit
     } else if (result.dismiss === $swal.DismissReason.cancel) {
@@ -256,9 +273,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
-.bg-img{
-  background-image: url('/static/bg.svg');
+.bg-img {
+  background-image: url("/static/bg.svg");
   background-size: cover;
   background-position: center;
 }
