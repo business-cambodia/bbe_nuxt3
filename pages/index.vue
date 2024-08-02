@@ -93,7 +93,7 @@
                           v-model="form.gender"
                           value="other"
                         />
-                        <span class="ml-2">ផ្សេងៗ</span>
+                        <span class="ml-2">ផ្សេងៗ</span> 
                       </label>
                     </div>
                   </div>
@@ -266,9 +266,7 @@ const submitForm = async () => {
 };
 
 onMounted(() => {
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000); // Simulate loading time, adjust as necessary
+  isLoading.value = false;
 });
 </script>
 
