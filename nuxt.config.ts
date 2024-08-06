@@ -27,6 +27,21 @@ export default defineNuxtConfig({
         },
         { rel: 'icon', type: 'image/x-icon', href: '/static/expo-logo.jpg' },
       ],
+      script: [
+        {
+          src: "https://www.googletagmanager.com/gtag/js?id=G-WZQS4EP92J",
+          async: true,
+        },
+        {
+          hid: 'gtmHead',
+          innerHTML: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-WZQS4EP92J');
+          `,
+        },
+      ],
     },
   },
   css: ['~/assets/css/main.css', '~/assets/css/index.css'],
