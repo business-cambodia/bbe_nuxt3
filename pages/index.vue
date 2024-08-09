@@ -237,8 +237,10 @@ const submitForm = async () => {
                <strong>លេខទូរសព្ទ-Phone:</strong> ${form.value.phone}<br>
                <strong>អាស័យដ្ឋាន-Address:</strong> ${form.value.address}<br>
                <strong>ភេទ-gender:</strong> ${form.value.gender}<br>
-               <strong>តួនាទី-Role:</strong> ${form.value.role}`,
+               <strong>តួនាទី-Role:</strong> ${form.value.role} <br><br>
+               <strong style="color: red;"> សូមបង្ហាញលទ្ធផលទៅកាន់ក្រុមការងារនិងបោះត្រា ដើម្បីទទួលបានសៀវភៅ.</strong>`,
             icon: "success",
+            allowOutsideClick: false,
           })
           .then(() => {
             location.reload(); // Refresh the page after the user clicks "OK"
@@ -266,7 +268,10 @@ const submitForm = async () => {
 };
 
 onMounted(() => {
-  isLoading.value = false;
+  // set time out
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 1000);
 });
 </script>
 
