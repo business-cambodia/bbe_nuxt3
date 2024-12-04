@@ -4,7 +4,7 @@
       class="text-center bg-white shadow-md border-dashed border-2 border-red-500 rounded-3xl p-8"
     >
       <img
-        src="/static/expo-logo.jpg"
+        src="/static/Logo.png"
         alt="Logo"
         class="mx-auto w-56 mb-4 aos-init aos-animate"
         data-aos="fade-up"
@@ -14,7 +14,7 @@
         data-aos="fade-up"
       >
         សូមស្វាគមន័មកកាន់ <br />
-        Business Book Expo
+        Business Cambodia Expo
       </p>
       <div class="loader container mx-auto flex items-center justify-center">
         <div></div>

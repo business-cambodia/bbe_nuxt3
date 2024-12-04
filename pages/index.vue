@@ -1,122 +1,91 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-r from-slate-900 to-slate-700 bg-img">
-    <Loading v-if="isLoading" />
-    <div v-else class="contact-wrapper">
-      <div class="flex justify-center mb-5">
-        <img src="/static/expo-logo.jpg" class="w-56" alt="" />
+  <div class="min-h-screen bg-gradient-to-r from-slate-900 to-slate-700">
+    <div class="contact-wrapper">
+      <div class="flex justify-center pl-3 mb-5">
+        <img src="/static/Logo.png" class="h-[25vh]" alt="" />
       </div>
-      <div class="envelope" :class="{ active: flipCard }">
-        <div class="back paper">
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 600 400"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <polygon points="300,200 0,400 600,400" fill="#d3d3d3" />
-            <rect y="200" width="600" height="200" fill="#d3d3d3" />
-          </svg>
-        </div>
-        <div class="content">
-          <div class="form-wrapper">
-            <form @submit.prevent="submitForm">
-              <div class="top-wrapper">
-                <div class="input">
-                  <label>ឈ្មោះ-Name</label>
-                  <input id="input" type="text" v-model="form.name" />
-                </div>
-                <div class="input">
-                  <label>លេខទូរសព្ទ-Phone</label>
-                  <input id="input" type="text" v-model="form.phone" />
-                </div>
-                <div class="input">
-                  <label>តួនាទី-Role</label>
-                  <div class="flex flex-col space-y-2">
-                    <select
-                      v-model="form.role"
-                      class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    >
-                      <option value="" disabled>Select a role...</option>
-                      <option
-                        v-for="role in roles"
-                        :key="role.name"
-                        :value="role.name"
-                      >
-                        {{ role.name }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="input">
-                  <label>អាស័យដ្ឋាន-Address</label>
+
+      <div class="content">
+        <div class="form-wrapper">
+          <form @submit.prevent="submitForm">
+            <div class="top-wrapper">
+              <div class="input">
+                <label>ឈ្មោះ-Name</label>
+                <input id="input" type="text" v-model="form.name" />
+              </div>
+              <div class="input">
+                <label>លេខទូរស័ព្ទ-Phone</label>
+                <input id="input" type="text" v-model="form.phone" />
+              </div>
+              <div class="input">
+                <label>តួនាទី-Role</label>
+                <div class="flex flex-col space-y-2">
                   <select
-                    v-model="form.address"
-                    class="block w-full p-4 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    v-model="form.role"
+                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
+                    <option value="" disabled>Select a role...</option>
                     <option
-                      v-for="(province, index) in provinces"
-                      :key="province.name"
-                      :value="province.name"
+                      v-for="role in roles"
+                      :key="role.name"
+                      :value="role.name"
                     >
-                      {{ province.name }}
+                      {{ role.name }}
                     </option>
                   </select>
                 </div>
               </div>
-              <div class="bottom-wrapper">
-                <div class="flex justify-between">
-                  <div class="input">
-                    <label>ភេទ-gender</label>
-                    <div class="flex space-x-4">
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          class="form-radio"
-                          v-model="form.gender"
-                          value="man"
-                        />
-                        <span class="ml-2">ប្រុស</span>
-                      </label>
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          class="form-radio"
-                          v-model="form.gender"
-                          value="woman"
-                        />
-                        <span class="ml-2">ស្រី</span>
-                      </label>
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          class="form-radio"
-                          v-model="form.gender"
-                          value="other"
-                        />
-                        <span class="ml-2">ផ្សេងៗ</span> 
-                      </label>
-                    </div>
-                  </div>
-                  <div class="submit">
-                    <button type="submit">
-                      <submitbtn />
-                    </button>
-                  </div>
+              <div class="input">
+                <label>អាស័យដ្ឋាន-Address</label>
+                <select
+                  v-model="form.address"
+                  class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option
+                    v-for="(province, index) in provinces"
+                    :key="province.name"
+                    :value="province.name"
+                  >
+                    {{ province.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="input">
+                <label>ភេទ-Gender</label>
+                <div class="flex space-x-4">
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      class="form-radio"
+                      v-model="form.gender"
+                      value="man"
+                    />
+                    <span class="ml-2">ប្រុស</span>
+                  </label>
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      class="form-radio"
+                      v-model="form.gender"
+                      value="woman"
+                    />
+                    <span class="ml-2">ស្រី</span>
+                  </label>
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      class="form-radio"
+                      v-model="form.gender"
+                      value="other"
+                    />
+                    <span class="ml-2">ផ្សេងៗ</span>
+                  </label>
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
-        <div class="front paper">
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 600 400"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <polygon points="300,0 0,200 600,200" fill="#fff" />
-            <rect y="200" width="600" height="200" fill="#fff" />
-          </svg>
+              <submitbtn />
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -124,51 +93,51 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useNuxtApp } from "#app";
-const { $swal } = useNuxtApp();
+import { ref, onMounted } from 'vue';
+import { useNuxtApp } from '#app';
+const { $swal }: any = useNuxtApp();
 
 const isLoading = ref(true);
 const flipCard = ref(false);
 const roles = ref<Array<{ name: string }>>([
-  { name: "Business Owner" },
-  { name: "Student" },
-  { name: "Staff" },
+  { name: 'អ្នករកស៊ី' },
+  { name: 'បុគ្គលិក' },
+  { name: 'សិស្ស' },
 ]);
 const provinces = ref<Array<{ name: string }>>([
-  { name: "ភ្នំពេញ-Phnom Penh" },
-  { name: "កំពត-Kampot" },
-  { name: "កំពង់ចាម-Kampong Cham" },
-  { name: "កំពង់ឆ្នាំង-Kampong Chhnang" },
-  { name: "កំពង់ធំ-Kampong Thom" },
-  { name: "កំពង់ស្ពឺ-Kampong Speu" },
-  { name: "កណ្ដាល-Kandal" },
-  { name: "កែប-Kep" },
-  { name: "កោះកុង-Koh Kong" },
-  { name: "ក្រចេះ-Kratié" },
-  { name: "តាកែវ-Takéo" },
-  { name: "ត្បូងឃ្មុំ-Tboung Khmum" },
-  { name: "បន្ទាយមានជ័យ-Banteay Meanchey" },
-  { name: "បាត់ដំបង-Battambang" },
-  { name: "ប៉ៃលិន-Pailin" },
-  { name: "ពោធិ៍សាត់-Pursat" },
-  { name: "ព្រៃវែង-Prey Veng" },
-  { name: "ព្រះសីហនុ-Preah Sihanouk" },
-  { name: "ព្រះវិហារ-Preah Vihear" },
-  { name: "មណ្ឌលគីរី-Mondulkiri" },
-  { name: "រតនគីរី-Ratanakiri" },
-  { name: "សៀមរាប-Siem Reap" },
-  { name: "ស្ទឹងត្រែង-Stueng Treng" },
-  { name: "ស្វាយរៀង-Svay Rieng" },
-  { name: "ឧត្ដរមានជ័យ-Oddar Meanchey" },
+  { name: 'ភ្នំពេញ-Phnom Penh' },
+  { name: 'កំពត-Kampot' },
+  { name: 'កំពង់ចាម-Kampong Cham' },
+  { name: 'កំពង់ឆ្នាំង-Kampong Chhnang' },
+  { name: 'កំពង់ធំ-Kampong Thom' },
+  { name: 'កំពង់ស្ពឺ-Kampong Speu' },
+  { name: 'កណ្ដាល-Kandal' },
+  { name: 'កែប-Kep' },
+  { name: 'កោះកុង-Koh Kong' },
+  { name: 'ក្រចេះ-Kratié' },
+  { name: 'តាកែវ-Takéo' },
+  { name: 'ត្បូងឃ្មុំ-Tboung Khmum' },
+  { name: 'បន្ទាយមានជ័យ-Banteay Meanchey' },
+  { name: 'បាត់ដំបង-Battambang' },
+  { name: 'ប៉ៃលិន-Pailin' },
+  { name: 'ពោធិ៍សាត់-Pursat' },
+  { name: 'ព្រៃវែង-Prey Veng' },
+  { name: 'ព្រះសីហនុ-Preah Sihanouk' },
+  { name: 'ព្រះវិហារ-Preah Vihear' },
+  { name: 'មណ្ឌលគីរី-Mondulkiri' },
+  { name: 'រតនគីរី-Ratanakiri' },
+  { name: 'សៀមរាប-Siem Reap' },
+  { name: 'ស្ទឹងត្រែង-Stueng Treng' },
+  { name: 'ស្វាយរៀង-Svay Rieng' },
+  { name: 'ឧត្ដរមានជ័យ-Oddar Meanchey' },
 ]);
 
 const form = ref({
-  name: "",
-  phone: "",
-  address: "ភ្នំពេញ-Phnom Penh",
-  gender: "",
-  role: null,
+  name: '',
+  phone: '',
+  address: 'ភ្នំពេញ-Phnom Penh',
+  gender: '',
+  role: 'អ្នករកស៊ី',
 });
 
 const toggle = () => {
@@ -184,86 +153,58 @@ const submitForm = async () => {
     !form.value.address ||
     !form.value.gender
   ) {
-    let missingField = "";
-    if (!form.value.name) missingField = "ឈ្មោះ-Name";
-    else if (!form.value.phone) missingField = "លេខទូរស័ព្ទ Phone number";
-    else if (!form.value.role) missingField = "តួនាទី-Role";
-    else if (!form.value.address) missingField = "អាស័យដ្ឋាន-Address";
-    else if (!form.value.gender) missingField = "ភេទ-gender";
+    let missingField = '';
+    if (!form.value.name) missingField = 'ឈ្មោះ-Name';
+    else if (!form.value.phone) missingField = 'លេខទូរស័ព្ទ Phone number';
+    else if (!form.value.role) missingField = 'តួនាទី-Role';
+    else if (!form.value.address) missingField = 'អាស័យដ្ឋាន-Address';
+    else if (!form.value.gender) missingField = 'ភេទ-gender';
 
     $swal.fire({
-      title: "ការដាក់ស្នើបរាជ័យ",
+      title: 'ការដាក់ស្នើបរាជ័យ',
       text: `សូមបំពេញ ${missingField}`,
-      icon: "warning",
-    });
-    return;
-  }
-
-  // Validate phone number length
-  if (form.value.phone.length < 9 || form.value.phone.length > 10) {
-    $swal.fire({
-      title: "ការដាក់ស្នើបរាជ័យ",
-      text: "លេខទូរស័ព្ទត្រូវមានប្រវែងចន្លោះ 9 ដល់ 10 ខ្ទង់",
-      icon: "warning",
+      icon: 'warning',
     });
     return;
   }
 
   try {
-    const result = await $swal.fire({
-      title: "តើ​អ្នក​ប្រាកដ​ឬ​អត់?",
-      text: "តើអ្នកចង់ដាក់ស្នើទម្រង់នេះទេ?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Yes, submit it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
-    });
-
-    if (result.isConfirmed) {
-      try {
-        const response = await useApi("/items/users", {
-          method: "POST",
-          data: form.value, // Use 'data' instead of 'body' for axios
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        $swal
-          .fire({
-            title: "បានដាក់ស្នើជោគជ័យ",
-            html: `ទម្រង់បែបបទរបស់អ្នកត្រូវបានដាក់ជូនជាមួយនឹងព័ត៌មានលម្អិតដូចខាងក្រោម:<br><br>
+    try {
+      const response = await useApi('/items/users', {
+        method: 'POST',
+        data: form.value, // Use 'data' instead of 'body' for axios
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      $swal
+        .fire({
+          title: 'បានដាក់ស្នើជោគជ័យ',
+          html: `ទម្រង់បែបបទរបស់អ្នកត្រូវបានដាក់ជូនជាមួយនឹងព័ត៌មានលម្អិតដូចខាងក្រោម:<br><br>
                <strong>ឈ្មោះ-Name:</strong> ${form.value.name}<br>
                <strong>លេខទូរសព្ទ-Phone:</strong> ${form.value.phone}<br>
                <strong>អាស័យដ្ឋាន-Address:</strong> ${form.value.address}<br>
                <strong>ភេទ-gender:</strong> ${form.value.gender}<br>
                <strong>តួនាទី-Role:</strong> ${form.value.role} <br><br>
                <strong style="color: red;"> សូមបង្ហាញលទ្ធផលទៅកាន់ក្រុមការងារនិងបោះត្រា ដើម្បីទទួលបានសៀវភៅ.</strong>`,
-            icon: "success",
-            allowOutsideClick: false,
-          })
-          .then(() => {
-            location.reload(); // Refresh the page after the user clicks "OK"
-          });
-      } catch (error: any) {
-        console.error("Failed to submit form:", error);
-        $swal.fire({
-          title: "ការដាក់ស្នើបរាជ័យ",
-          text: "មានបញ្ហាកើតឡើងនៅពេលដាក់ស្នើទម្រង់នេះ"+error.message,
-          icon: "error",
+          icon: 'success',
+          allowOutsideClick: false,
+        })
+        .then(() => {
+          location.reload(); // Refresh the page after the user clicks "OK"
         });
-      }
-
-      toggle(); // Trigger animation on submit
-    } else if (result.dismiss === $swal.DismissReason.cancel) {
+    } catch (error: any) {
+      console.error('Failed to submit form:', error);
       $swal.fire({
-        title: "Cancelled",
-        text: "Your form submission has been cancelled.",
-        icon: "error",
+        title: 'ការដាក់ស្នើបរាជ័យ',
+        text: 'មានបញ្ហាកើតឡើងនៅពេលដាក់ស្នើទម្រង់នេះ' + error.message,
+        icon: 'error',
       });
     }
+
+    toggle(); // Trigger animation on submit
   } catch (error) {
-    console.error("Failed to submit form:", error);
+    console.error('Failed to submit form:', error);
   }
 };
 
@@ -277,7 +218,7 @@ onMounted(() => {
 
 <style scoped>
 .bg-img {
-  background-image: url("/static/bg.svg");
+  background-image: url('/static/bg.svg');
   background-size: cover;
   background-position: center;
 }
@@ -368,8 +309,7 @@ onMounted(() => {
 
 .top-wrapper {
   padding: 2em 2em 0;
-  border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em;
+  border-radius: 0.5em;
 }
 
 .bottom-wrapper {
@@ -385,7 +325,7 @@ onMounted(() => {
 
 .bottom-wrapper:after {
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   opacity: 0;
   background: #cc0112;
