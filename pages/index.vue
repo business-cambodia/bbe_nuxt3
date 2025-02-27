@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-white flex items-center justify-center p-4 overflow-hidden">
+  <div class="h-dvh bg-white flex items-center justify-center p-4 overflow-hidden">
     <!-- Loading Animation -->
     <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center">
       <div class="relative">
@@ -35,14 +35,13 @@
       :class="{'opacity-0 scale-95': isLoading, 'opacity-100 scale-100': !isLoading}"
     >
       <!-- Logo Section -->
-      <div class="flex justify-center py-8 relative">
+      <div class="flex justify-center pt-2 pb-3 relative">
         <img src="~/assets/hc.png" class="h-24 md:h-32 drop-shadow-xl" alt="Logo" />
         <div class="absolute inset-0 bg-gradient-to-b from-purple-500/20 to-transparent"></div>
       </div>
 
       <!-- Form Content -->
       <div class="px-6 pb-8">
-        <h2 class="text-2xl font-bold text-white text-center mb-8">Registration Form</h2>
         
         <form @submit.prevent="submitForm" class="space-y-6">
           <!-- Name Input -->
@@ -167,7 +166,7 @@
           <div class="pt-4">
             <button 
               type="submit" 
-              class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-lg shadow-lg hover:shadow-purple-500/50 transform hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center"
+              class="w-full py-3 px-4 bg-green-500 text-white font-medium rounded-lg shadow-lg hover:shadow-purple-500/50 transform hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center"
             >
               <span>Submit</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
