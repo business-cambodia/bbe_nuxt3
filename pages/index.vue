@@ -1,92 +1,181 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-r from-slate-900 to-slate-700">
-    <div class="contact-wrapper">
-      <div class="flex justify-center pl-3 mb-5">
-        <img src="/static/Logo.png" class="h-[25vh]" alt="" />
+  <div class="min-h-screen bg-white flex items-center justify-center p-4 overflow-hidden">
+    <!-- Loading Animation -->
+    <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center">
+      <div class="relative">
+        <!-- 3D Rotating Logo Container -->
+        <div class="logo-container">
+          <img 
+           src="~/assets/hc.png"
+            class="h-40 w-40 object-contain "
+            alt="Logo" 
+          />
+        </div>
+        
+        <!-- Loading Text -->
+        <div class="mt-8 text-center">
+          <h2 class="text-2xl font-bold text-green-500 tracking-wider loading-text">
+            សូមស្វាគមន៍
+          </h2>
+          <div class="flex justify-center mt-4">
+            <div class="loading-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Form (Hidden during loading) -->
+    <div 
+      v-else
+      class="w-full max-w-2xl rounded-2xl backdrop-blur-lg  bg-green-900  shadow-2xl overflow-hidden transform transition-all duration-700"
+      :class="{'opacity-0 scale-95': isLoading, 'opacity-100 scale-100': !isLoading}"
+    >
+      <!-- Logo Section -->
+      <div class="flex justify-center py-8 relative">
+        <img src="~/assets/hc.png" class="h-24 md:h-32 drop-shadow-xl" alt="Logo" />
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-500/20 to-transparent"></div>
       </div>
 
-      <div class="content">
-        <div class="form-wrapper">
-          <form @submit.prevent="submitForm">
-            <div class="top-wrapper">
-              <div class="input">
-                <label>ឈ្មោះ-Name</label>
-                <input id="input" type="text" v-model="form.name" />
-              </div>
-              <div class="input">
-                <label>លេខទូរស័ព្ទ-Phone</label>
-                <input id="input" type="text" v-model="form.phone" />
-              </div>
-              <div class="input">
-                <label>តួនាទី-Role</label>
-                <div class="flex flex-col space-y-2">
-                  <select
-                    v-model="form.role"
-                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option value="" disabled>Select a role...</option>
-                    <option
-                      v-for="role in roles"
-                      :key="role.name"
-                      :value="role.name"
-                    >
-                      {{ role.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="input">
-                <label>អាស័យដ្ឋាន-Address</label>
-                <select
-                  v-model="form.address"
-                  class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option
-                    v-for="(province, index) in provinces"
-                    :key="province.name"
-                    :value="province.name"
-                  >
-                    {{ province.name }}
-                  </option>
-                </select>
-              </div>
-
-              <div class="input">
-                <label>ភេទ-Gender</label>
-                <div class="flex space-x-4">
-                  <label class="inline-flex items-center">
-                    <input
-                      type="radio"
-                      class="form-radio"
-                      v-model="form.gender"
-                      value="man"
-                    />
-                    <span class="ml-2">ប្រុស</span>
-                  </label>
-                  <label class="inline-flex items-center">
-                    <input
-                      type="radio"
-                      class="form-radio"
-                      v-model="form.gender"
-                      value="woman"
-                    />
-                    <span class="ml-2">ស្រី</span>
-                  </label>
-                  <label class="inline-flex items-center">
-                    <input
-                      type="radio"
-                      class="form-radio"
-                      v-model="form.gender"
-                      value="other"
-                    />
-                    <span class="ml-2">ផ្សេងៗ</span>
-                  </label>
-                </div>
-              </div>
-              <submitbtn />
+      <!-- Form Content -->
+      <div class="px-6 pb-8">
+        <h2 class="text-2xl font-bold text-white text-center mb-8">Registration Form</h2>
+        
+        <form @submit.prevent="submitForm" class="space-y-6">
+          <!-- Name Input -->
+          <div class="group">
+            <label class="block text-white text-sm font-medium mb-2">ឈ្មោះ-Name</label>
+            <div class="relative">
+              <input 
+                type="text" 
+                v-model="form.name" 
+                class="w-full px-4 py-3 bg-white/5 border border-purple-300/30 rounded-lg text-white placeholder-purple-200/50 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                placeholder="បញ្ជូលឈ្មោះរបស់អ្នក"
+              />
+              <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <!-- Phone Input -->
+          <div class="group">
+            <label class="block text-white text-sm font-medium mb-2">លេខទូរស័ព្ទ-Phone</label>
+            <div class="relative">
+              <input 
+                type="text" 
+                v-model="form.phone" 
+                class="w-full px-4 py-3 bg-white/5 border border-purple-300/30 rounded-lg text-white placeholder-purple-200/50 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                placeholder="បញ្ជូលលេខទូរស័ព្ទរបស់អ្នក"
+              />
+              <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
+            </div>
+          </div>
+
+          <!-- Role Select -->
+          <div class="group">
+            <label class="block text-white text-sm font-medium mb-2">តួនាទី-Role</label>
+            <div class="relative">
+              <select
+                v-model="form.role"
+                class="w-full px-4 py-3 bg-white/5 border border-purple-300/30 rounded-lg text-white focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all appearance-none"
+              >
+                <option value="" disabled class="bg-indigo-900 text-white">Select a role...</option>
+                <option
+                  v-for="role in roles"
+                  :key="role.name"
+                  :value="role.name"
+                  class="bg-indigo-900 text-white"
+                >
+                  {{ role.name }}
+                </option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg class="h-5 w-5 text-purple-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
+            </div>
+          </div>
+
+          <!-- Address Select -->
+          <div class="group">
+            <label class="block text-white text-sm font-medium mb-2">អាស័យដ្ឋាន-Address</label>
+            <div class="relative">
+              <select
+                v-model="form.address"
+                class="w-full px-4 py-3 bg-white/5 border border-purple-300/30 rounded-lg text-white focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all appearance-none"
+              >
+                <option
+                  v-for="province in provinces"
+                  :key="province.name"
+                  :value="province.name"
+                  class="bg-indigo-900 text-white"
+                >
+                  {{ province.name }}
+                </option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg class="h-5 w-5 text-purple-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
+            </div>
+          </div>
+
+          <!-- Gender Selection -->
+          <div class="group">
+            <label class="block text-white text-sm font-medium mb-2">ភេទ-Gender</label>
+            <div class="flex space-x-6">
+              <label class="relative flex items-center p-3 rounded-lg border border-purple-300/30 bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                <input
+                  type="radio"
+                  class="form-radio h-5 w-5 text-green-600 focus:ring-green-500"
+                  v-model="form.gender"
+                  value="man"
+                />
+                <span class="ml-2 text-white">ប្រុស</span>
+                <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
+              </label>
+              <label class="relative flex items-center p-3 rounded-lg border border-purple-300/30 bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                <input
+                  type="radio"
+                  class="form-radio h-5 w-5 text-green-600 focus:ring-green-500"
+                  v-model="form.gender"
+                  value="woman"
+                />
+                <span class="ml-2 text-white">ស្រី</span>
+                <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
+              </label>
+              <label class="relative flex items-center p-3 rounded-lg border border-purple-300/30 bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                <input
+                  type="radio"
+                  class="form-radio h-5 w-5 text-green-600 focus:ring-green-500"
+                  v-model="form.gender"
+                  value="other"
+                />
+                <span class="ml-2 text-white">ផ្សេងៗ</span>
+                <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-indigo-500/10 pointer-events-none"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-4">
+            <button 
+              type="submit" 
+              class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-lg shadow-lg hover:shadow-purple-500/50 transform hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center"
+            >
+              <span>Submit</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -217,249 +306,99 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.bg-img {
-  background-image: url('/static/bg.svg');
-  background-size: cover;
-  background-position: center;
-}
-
-.contact-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.flip-card {
-  border-radius: 0.5em;
-  position: fixed;
-  top: 1em;
-  left: 1em;
-  width: 5em;
-  padding: 0.5em;
-  border: 0.1em solid #fff;
-  color: #fff;
-  text-align: center;
-  cursor: pointer;
-  z-index: 9;
-}
-
-.envelope {
-  position: relative;
-  width: 85%;
-  margin: 0 auto;
-  perspective: 1000px;
-}
-
-.envelope.active .content {
-  padding: 15em 2em 2em;
-}
-
-.envelope.active .paper.front,
-.envelope.active .paper.back {
-  animation-duration: 1.5s;
-  animation-direction: normal;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
-}
-
-.envelope.active .paper.front {
-  animation-name: envelope-front;
-}
-
-.envelope.active .paper.back {
-  animation-name: envelope-back;
-}
-
-.envelope.active .paper.back:before {
-  animation-duration: 0.5s;
-  animation-direction: normal;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
-  animation-delay: 1.25s;
-  animation-name: envelope-back-before;
-}
-
-.envelope.active .bottom-wrapper {
-  transform: rotateX(180deg);
-}
-
-.envelope.active .bottom-wrapper:after {
-  z-index: 0;
-  opacity: 1;
-}
-
-.content {
-  padding: 0.5em;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 9;
-  transition: all 0.5s ease-in-out;
-  transition-delay: 1s;
-}
-
-.top-wrapper,
-.bottom-wrapper {
-  box-sizing: border-box;
-  background: #cc0112;
-  color: #fff;
-}
-
-.top-wrapper {
-  padding: 2em 2em 0;
-  border-radius: 0.5em;
-}
-
-.bottom-wrapper {
-  padding: 0 2em 2em;
-  border-bottom-left-radius: 0.5em;
-  border-bottom-right-radius: 0.5em;
-  transition: all 0.5s ease-in-out;
-  transform-origin: top;
+/* 3D Logo Animation */
+.logo-container {
+  perspective: 800px;
   transform-style: preserve-3d;
-  position: relative;
-  margin-top: -1px;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bottom-wrapper:after {
-  position: absolute;
-  content: '';
-  display: block;
-  opacity: 0;
-  background: #cc0112;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+.logo-3d {
+  animation: floating 3s ease-in-out infinite, rotateY 6s linear infinite;
+  filter: drop-shadow(0 0 15px rgba(156, 39, 176, 0.7));
 }
 
-form label {
-  display: block;
-  padding-bottom: 0.5em;
-}
-
-form,
-form textarea {
-  box-shadow: 0;
-  outline: none;
-  background: transparent;
-  color: #fff;
-}
-
-#input {
-  background: transparent;
-  color: #fff;
-  border: 0.1em solid #fff;
-  border-radius: 0.25em;
-  padding: 0.5em;
-  box-sizing: border-box;
-  width: 100%;
-}
-form input {
-  border-width: 0 0 0.1em;
-  border-color: #fff;
-  border-style: solid;
-}
-
-form textarea {
-  border: 0.1em solid #fff;
-  border-radius: 0.25em;
-}
-
-form .submit-card {
-  background: #fff;
-  color: #222;
-  text-align: center;
-  padding: 0.5em;
-  box-sizing: border-box;
-  width: 100%;
-  border: 0;
-  box-shadow: none;
-  border-radius: 0.25em;
-  cursor: pointer;
-}
-
-form .input {
-  padding-bottom: 1em;
-}
-
-.paper {
-  position: absolute;
-  display: block;
-  width: 100%;
-  top: 0;
-  left: 0;
-  border-bottom-left-radius: 0.5em;
-  border-bottom-right-radius: 0.5em;
-}
-
-@keyframes envelope-front {
+@keyframes floating {
   0% {
-    top: 10em;
-    z-index: 0;
+    transform: translateY(0) rotateX(0);
   }
   50% {
-    top: 15em;
-    z-index: 9;
+    transform: translateY(-20px) rotateX(10deg);
   }
   100% {
-    top: 10em;
-    z-index: 9;
+    transform: translateY(0) rotateX(0);
   }
 }
 
-@keyframes envelope-back {
+@keyframes rotateY {
   0% {
-    top: 0;
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Welcome Text Animation */
+.loading-text {
+  animation: pulse 2s infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.3em;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
   }
   50% {
-    top: 5em;
-  }
-  100% {
-    top: 0;
+    opacity: 0.8;
+    transform: scale(1.05);
   }
 }
 
-@keyframes envelope-back-before {
-  0% {
-    border-color: transparent transparent #d3d3d3 transparent;
-    transform: rotateX(0deg);
-    z-index: 0;
-  }
-  100% {
-    border-color: transparent transparent #fff transparent;
-    transform: rotateX(180deg);
-    z-index: 99;
-    position: relative;
-  }
+/* Loading Dots Animation */
+.loading-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-/* Additional Media Query for Mobile Devices */
-@media (max-width: 600px) {
-  .contact-wrapper {
-    padding: 10px;
-  }
+.loading-dots span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgb(1, 221, 60);
+  opacity: 0.7;
+}
 
-  .envelope {
-    width: 100%;
-    padding: 0;
-  }
+.loading-dots span:nth-child(1) {
+  animation: blink 1.4s infinite 0.2s;
+}
 
-  .envelope.active .content {
-    padding: 10em 1em 1em;
-  }
+.loading-dots span:nth-child(2) {
+  animation: blink 1.4s infinite 0.4s;
+}
 
-  .top-wrapper,
-  .bottom-wrapper {
-    padding: 1em;
-  }
+.loading-dots span:nth-child(3) {
+  animation: blink 1.4s infinite 0.6s;
+}
 
-  .paper svg {
-    width: 100%;
-    height: auto;
+@keyframes blink {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
   }
 }
 </style>
